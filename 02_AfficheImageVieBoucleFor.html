@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>2- Afficher des vies avec une boucle for</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100%;
+            text-align: center;
+        }
+
+        canvas {
+            background-image: url("images/fondJeu.png");
+            border: 1px solid #015385;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas width="480" height="360"> </canvas>
+
+    <script>
+        //************************************* Le canvas
+
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+
+        //Variable de type objet pour l'image de vie 
+        let vie 
+     
+        //Charger l'image de vie
+        
+        //Variable qui mémorise le nombre de vie
+        let nombreVie = 3;
+
+
+        //Actulaiser l'affichage du canvas
+        setInterval(afficherNombreVie, 1000 / 60);  
+
+        // dans un jeu, il faut appeller  afficherNombreVie() dans actualiserJeu()  
+
+
+        //**************Section des FONCTIONS ************************//
+        //Afficher l'image de vie plusieurs fois selon la valeur de nombre de vie
+        function afficherNombreVie() {
+           
+                               
+        }
+
+    </script>
+
+</body>
+
+</html>

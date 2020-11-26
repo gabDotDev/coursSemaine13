@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>05 - Enlever des objets d'un tableau</title>
+    <style type="text/css">
+        canvas {
+            background-image: url(images/fondMarin.png);
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Créer la balise canvas et définir ses dimensions -->
+    <canvas width="800" height="600"> </canvas>
+
+    <script>
+        //Récupérer le canvas
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+
+        //tableau pour mémoriser les meduses (image, position X et Y, etc.)
+        let lesMeduses = [];
+        //L'objet pour spongebob
+        let spongebob = {
+            img: new Image(),
+            largeur: 100,
+            hauteur: 100,
+            posX: (leCanvas.width - 100) / 2,
+            posY: leCanvas.height - 100,
+            vitesse: 3
+        }
+        //L'image de spongebob
+        spongebob.img.src = "images/spongebob.png";
+
+        //Pour savoir si les touches fléchées du clavier sont appuyées
+        let flecheGauche = false;
+        let flecheDroite = false;
+        let flecheHaut = false;
+        let flecheBas = false;
+        //Écouteur sur le document pour détecter si des touches de clavier sont appuyées ou relâchées
+        document.addEventListener("keydown", presserTouche);
+        document.addEventListener("keyup", relacherTouche);
+
+        //Afficher les index et valeurs du tableau
+        console.table(lesMeduses);
+
+
+        //Affichage des objets animés selon une cadence de 60 ips 
+        setInterval(actualiserJeu, 1000 / 60);
+
+        //Création d'une méduse à chaque seconde en appelant la fonction ajouterUneMeduse
+        let numeroIntervalAjoutMeduse = setInterval(ajouterUneMeduse, 1000);
+
+
+        ////////////////////////// Les fonctions /////////////////////////////////
+
+        //Fonction qui créé UNE SEULE méduse et l'ajoute dans le tableau des méduses  
+        function ajouterUneMeduse() {
+            //limiter à 10 éléments dans le tableau
+//À completer *********          
+            
+            
+            //Note les propriétés posX et posY sont calculées au hasard selon la largeur et la heuteur du canvas et de l'image 
+            let uneMeduse = {
+                img: new Image(),
+                posX: Math.floor(Math.random() * (leCanvas.width - 90)),
+                posY: Math.floor(Math.random() * (leCanvas.height - 200)),
+                largeur: Math.ceil(Math.random() * 90) + 20,
+                hauteur: Math.ceil(Math.random() * 98) + 20,
+            }
+            //Charger l'image de meduse
+            uneMeduse.img.src = "images/meduse.png";
+
+            //Ajouter chaque méduse dans le tableau des méduses, pour permettre de les //détecter plus tard lors des collisions (ou faire des déplacements, animation etc.)
+            lesMeduses.push(uneMeduse);
+            // on pourrait aussi faire 
+            //lesMeduses[index]= uneMeduse;
+        }
+        
+
+        //Fonction pour actualiser l'affichage du canvas
+        function actualiserJeu() {
+            //Effacer le canvas
+            ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
+
+            deplacerSpongebob();
+            //Dessiner les qui se trouve dans le tableau
+            dessinerLesMeduses();
+
+            //DÉTECION COLLISION
+            //Vraible pour mémoriser s'il y a une collision entre spongebob et une meduse 
+            let siSpongbobeAttrapeMeduse;
+            //Parcour le tableau des meduses et vérifie s'il y a collision entre spongebob et une méduse
+
+            //On enleve la meduse touchée de cette case du tableau 
+
+            console.log(lesMeduses);
+
+        }
+
+        //Dessiner chaque méduse qui se trouve dans le tableau des mesuses 
+        function dessinerLesMeduses() {
+
+            //parcourir le tableau avec une boucle for... of
+            //qui permet de sélectionner chaque méduse et le dessine
+            for (let uneMeduse of lesMeduses) {
+
+                //Chaque méduse est dessinée à sa taille différente
+                ctx.drawImage(uneMeduse.img, uneMeduse.posX, uneMeduse.posY, uneMeduse.largeur, uneMeduse.hauteur);
+
+                //déplacement aléatoire en X, pour créer un petit mouvement
+
+                uneMeduse.posX += Math.random() - 0.5;
+                //uneMeduse.posY += Math.random() -0.5;
+            }
+        }
+
+        //Fonction pour déplacer verticalement le spongebob
+        function deplacerSpongebob() {
+            //On déplace spongebob selon la touche active
+            if (flecheGauche) {
+                spongebob.posX -= spongebob.vitesse;
+            }
+            if (flecheDroite) {
+                spongebob.posX += spongebob.vitesse;
+            }
+
+            //S'assurer que le spongebob ne sort pas des limites horizontale du canvas
+
+            if (spongebob.posX < 0) { //limite Gauche
+                spongebob.posX = 0;
+            }
+            //limite droite
+            let posXmax = leCanvas.width - spongebob.largeur;
+            if (spongebob.posX > posXmax) {
+                spongebob.posX = posXmax;
+            }
+
+            //selon la touche active de haut et bas
+            if (flecheHaut) {
+                spongebob.posY -= spongebob.vitesse;
+            }
+            if (flecheBas) {
+                spongebob.posY += spongebob.vitesse;
+            }
+
+            //S'assurer que le spongebob ne sort pas des limites du canvas
+            //Limite haut
+            if (spongebob.posY < 0) {
+                spongebob.posY = 0;
+            }
+
+            //Limite bas
+            let posYmax = leCanvas.height - spongebob.hauteur;
+            if (spongebob.posY > posYmax) {
+                spongebob.posY = posYmax;
+            }
+
+            //Dessiner spongebob
+            ctx.drawImage(spongebob.img, spongebob.posX, spongebob.posY)
+
+        }
+
+        //Détecte si deux objets rectangulaires se touchent
+        function detecterCollision(objet1, objet2) {
+            if (objet1.posX < objet2.posX + objet2.largeur &&
+                objet1.posX + objet1.largeur > objet2.posX &&
+                objet1.posY < objet2.posY + objet2.hauteur &&
+                objet1.posY + objet1.hauteur > objet2.posY) {
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // Détecte quelles touches sont appuyées
+        function presserTouche(event) {
+            //Enregistrer si une touche gauche/droite est pressée
+            if (event.keyCode == 39) { //flèche droite
+                flecheDroite = true;
+                flecheGauche = false;
+            }
+            if (event.keyCode == 37) { //flèche gauche
+                flecheGauche = true;
+                flecheDroite = false;
+            }
+            //Enregistrer si une touche haut/bas est      
+            if (event.keyCode == 38) { //flèche haut
+                flecheHaut = true;
+                flecheBas = false;
+            }
+            if (event.keyCode == 40) { //flèche bas
+                flecheBas = true;
+                flecheHaut = false;
+            }
+        }
+
+        // Détecte quelles touches sont relâchées
+        function relacherTouche(event) {
+            //Enregistrer si une touche gauche/droite est pressée
+            if (event.keyCode == 39) { //flèche droite
+                flecheDroite = false;
+            }
+            if (event.keyCode == 37) { //flèche gauche
+                flecheGauche = false;
+            }
+
+            //Enregistrer si une touche haut/bas est relâchée
+            if (event.keyCode == 38) { //flèche haut
+                flecheHaut = false;
+            }
+            if (event.keyCode == 40) { //flèche bas
+                flecheBas = false;
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

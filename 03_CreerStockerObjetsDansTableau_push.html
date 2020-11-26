@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>03 - Créer et mémoriser des objets dans un tableau </title>
+    <style type="text/css">
+        canvas {
+            background-image: url(images/fondMarin.png);
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Créer la balise canvas et définir ses dimensions -->
+    <canvas width="800" height="600"> </canvas>
+
+    <script>
+        //Récupérer le canvas
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+
+        //Déclaration d'un tableau vide, pour mémoriser les meduses plus tard 
+
+
+        //Créer 5 méduses à l'aide d'une boucle for 
+        //à chaque itération, une variable de type objet méduse est créée et mémorisée dans le tableau
+
+
+        //Note les propriétés posX et posY sont calculées au hasard selon la largeur et la heuteur du canvas et de l'image
+        let uneMeduse = {
+            img: new Image(),
+            posX: 0, //Math.ceil(Math.random() * (leCanvas.width - 90)),
+            posY: 0, //Math.ceil(Math.random() * (leCanvas.height - 200)),
+            largeur: 90, //Math.ceil(Math.random() * 90 ) + 20, //largeur 20 pix minimum
+            hauteur: 98, //Math.ceil(Math.random() * 98 ) + 20, //hauteur 20 pix minimum
+        }
+        //Charger l'image de meduse
+        uneMeduse.img.src = "images/meduse.png";
+
+        //Ajouter chaque méduse dans le tableau des méduses, pour permettre de les dessiner 
+
+        // on pourrait aussi faire 
+        //lesMeduses[index]= uneMeduse;
+
+
+        //Afficher les index et valeurs du tableau poue debugage
+        // console.table(lesMeduses);
+
+        ///////////////////////////////////////////////////////////////////////
+        //Affichage des objets animés selon une cadence de 60 ips 
+        let numeroInterval = setInterval(actualiserJeu, 1000 / 60);
+
+        ////////////////////////// Les fonctions /////////////////////////////////
+
+        //Fonction pour actualiser l'affichage du canvas
+        function actualiserJeu() {
+            //Effacer le canvas
+            ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
+
+            //Appel de la fonction pour dessiner les meduses
+
+        }
+
+        //Dessiner chaque méduse qui se trouve dans le tableau des mesuses 
+        function dessinerLesMeduses() {
+
+            //parcourir le tableau avec une boucle for... of
+            //qui permet de sélectionner chaque méduse et le dessine
+
+            //Chaque méduse est dessinée à une taille différente en  utilisant les alrgeur et les heuteurs déterminées des meduses
+            // il faut utiliser le foramt : drawImage( image, positionx , positiony, largeur , hauteur)
+            ctx.drawImage(uneMeduse.img,0,0);
+        }
+
+    </script>
+
+</body>
+
+</html>

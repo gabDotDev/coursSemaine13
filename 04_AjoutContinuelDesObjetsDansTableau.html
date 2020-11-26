@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>05 - Créer et ajouter des objets dans un tableau continuellement</title>
+    <style type="text/css">
+        canvas {
+            background-image: url(images/fondMarin.png);
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Créer la balise canvas et définir ses dimensions -->
+    <canvas width="800" height="600"> </canvas>
+
+    <script>
+        //Récupérer le canvas
+        let leCanvas = document.querySelector("canvas");
+        let ctx = leCanvas.getContext("2d");
+
+
+        //tableau pour mémoriser les meduses (image, position X et Y, etc.)
+        let lesMeduses = [];
+
+
+        //Affichage des objets animés selon une cadence de 60 ips 
+        setInterval(actualiserJeu, 1000 / 60);
+
+        //Création d'une méduse à chaque seconde en appelant la fonction ajouterUneMeduse
+        
+
+        ////////////////////////// Les fonctions /////////////////////////////////
+
+
+
+
+        ////////////////////////// Les fonctions /////////////////////////////////
+
+        //Fonction qui créé UNE SEULE méduse et l'ajoute dans le tableau des méduses 
+
+        
+        
+        //Fonction pour actualiser l'affichage du canvas
+        function actualiserJeu() {
+            //Effacer le canvas
+            ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
+
+            //Dessiner les qui se trouve dans le tableau
+            dessinerLesMeduses();
+
+        }
+
+        //Dessiner chaque méduse qui se trouve dans le tableau des mesuses 
+        function dessinerLesMeduses() {
+
+            //parcourir le tableau avec une boucle for... of
+            //qui permet de sélectionner chaque méduse et le dessine
+            for (let uneMeduse of lesMeduses) {
+
+                //Chaque méduse est dessinée à sa taille différente
+                ctx.drawImage(uneMeduse.img, uneMeduse.posX, uneMeduse.posY, uneMeduse.largeur, uneMeduse.hauteur);
+
+                //déplacement aléatoire en X, pour créer un petit mouvement
+
+
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
