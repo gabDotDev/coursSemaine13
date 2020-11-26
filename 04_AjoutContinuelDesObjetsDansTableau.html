@@ -28,13 +28,26 @@
 
 
         //Affichage des objets animés selon une cadence de 60 ips 
-        setInterval(actualiserJeu, 1000 / 60);
+        setInterval(actualiserJeu, 1000 / 12);
 
         //Création d'une méduse à chaque seconde en appelant la fonction ajouterUneMeduse
-        
+        setInterval(ajouterUneMeduse, 1000);
 
         ////////////////////////// Les fonctions /////////////////////////////////
+        function ajouterUneMeduse(){
+            let uneMeduse = {
+            img: new Image(),
+            posX: Math.ceil(Math.random() * (leCanvas.width - 90)),
+            posY: Math.ceil(Math.random() * (leCanvas.height - 200)),
+            largeur: Math.ceil(Math.random() * 90 ) + 20, //largeur 20 pix minimum
+            hauteur: Math.ceil(Math.random() * 98 ) + 20, //hauteur 20 pix minimum
+        }
+            //Charger l'image de meduse
+            uneMeduse.img.src = "images/meduse.png";
 
+            //Ajouter chaque méduse dans le tableau des méduses, pour permettre de les dessiner 
+            lesMeduses.push(uneMeduse);
+        }
 
 
 
@@ -65,7 +78,11 @@
                 ctx.drawImage(uneMeduse.img, uneMeduse.posX, uneMeduse.posY, uneMeduse.largeur, uneMeduse.hauteur);
 
                 //déplacement aléatoire en X, pour créer un petit mouvement
+                for(i of lesMeduses){
+                ctx.drawImage(i.img,i.posX,i.posY,i.largeur,i.hauteur);
 
+                i.posX += (Math.random()-.5);
+            }
 
             }
         }
