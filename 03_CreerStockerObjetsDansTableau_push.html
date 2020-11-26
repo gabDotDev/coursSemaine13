@@ -24,27 +24,27 @@
 
 
         //Déclaration d'un tableau vide, pour mémoriser les meduses plus tard 
-
+        let lesMeduses = [];
 
         //Créer 5 méduses à l'aide d'une boucle for 
         //à chaque itération, une variable de type objet méduse est créée et mémorisée dans le tableau
-
-
+        for(let i = 0; i<5; i++){
         //Note les propriétés posX et posY sont calculées au hasard selon la largeur et la heuteur du canvas et de l'image
         let uneMeduse = {
             img: new Image(),
-            posX: 0, //Math.ceil(Math.random() * (leCanvas.width - 90)),
-            posY: 0, //Math.ceil(Math.random() * (leCanvas.height - 200)),
-            largeur: 90, //Math.ceil(Math.random() * 90 ) + 20, //largeur 20 pix minimum
-            hauteur: 98, //Math.ceil(Math.random() * 98 ) + 20, //hauteur 20 pix minimum
+            posX: Math.ceil(Math.random() * (leCanvas.width - 90)),
+            posY: Math.ceil(Math.random() * (leCanvas.height - 200)),
+            largeur: Math.ceil(Math.random() * 90 ) + 20, //largeur 20 pix minimum
+            hauteur: Math.ceil(Math.random() * 98 ) + 20, //hauteur 20 pix minimum
         }
         //Charger l'image de meduse
         uneMeduse.img.src = "images/meduse.png";
 
         //Ajouter chaque méduse dans le tableau des méduses, pour permettre de les dessiner 
-
-        // on pourrait aussi faire 
-        //lesMeduses[index]= uneMeduse;
+        lesMeduses[i]= uneMeduse;
+        // on pourrait aussi faire
+        //lesMeduses.push(uneMeduse);
+        }
 
 
         //Afficher les index et valeurs du tableau poue debugage
@@ -52,7 +52,7 @@
 
         ///////////////////////////////////////////////////////////////////////
         //Affichage des objets animés selon une cadence de 60 ips 
-        let numeroInterval = setInterval(actualiserJeu, 1000 / 60);
+        let numeroInterval = setInterval(actualiserJeu, 1000 / 12);
 
         ////////////////////////// Les fonctions /////////////////////////////////
 
@@ -62,7 +62,7 @@
             ctx.clearRect(0, 0, leCanvas.width, leCanvas.height);
 
             //Appel de la fonction pour dessiner les meduses
-
+            dessinerLesMeduses();
         }
 
         //Dessiner chaque méduse qui se trouve dans le tableau des mesuses 
@@ -70,10 +70,13 @@
 
             //parcourir le tableau avec une boucle for... of
             //qui permet de sélectionner chaque méduse et le dessine
+            for(i of lesMeduses){
+                ctx.drawImage(i.img,i.posX,i.posY,i.largeur,i.hauteur);
 
-            //Chaque méduse est dessinée à une taille différente en  utilisant les alrgeur et les heuteurs déterminées des meduses
+                i.posX += (Math.random()-.5);
+            }
+            //Chaque méduse est }dessinée à une taille différente en  utilisant les alrgeur et les heuteurs déterminées des meduses
             // il faut utiliser le foramt : drawImage( image, positionx , positiony, largeur , hauteur)
-            ctx.drawImage(uneMeduse.img,0,0);
         }
 
     </script>
