@@ -35,10 +35,15 @@
 
 
         //Variable de type objet pour l'image de vie 
-        let vie 
+        let vie = {
+            img: new Image(),
+            posX: 0,
+            posY: 0,
+            largeur: 50,
+        }
      
         //Charger l'image de vie
-        
+        vie.img.src = ""
         //Variable qui mémorise le nombre de vie
         let nombreVie = 3;
 
@@ -47,13 +52,12 @@
         setInterval(afficherNombreVie, 1000 / 60);  
 
         // dans un jeu, il faut appeller  afficherNombreVie() dans actualiserJeu()  
-
+        setInterval(afficherNombreVie, 1000/60)
 
         //**************Section des FONCTIONS ************************//
         //Afficher l'image de vie plusieurs fois selon la valeur de nombre de vie
         function afficherNombreVie() {
-           
-                               
+           ctx.drawImage(vie.img, 0, 0);                 
         }
 
     </script>
